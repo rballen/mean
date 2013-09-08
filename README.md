@@ -1,4 +1,35 @@
-# MEAN Stack
+robuntu-mean-admin
+====================================
+
+setup
+--------------------------------
+# fork https://github.com/linnovate/mean on github and now clone to laptop to work on files
+git clone https://github.com/rballen/mean.git robuntu-mean-admin
+# configure remote so i can fetch upstream changes into my code
+cd robuntu-mean-admin
+git remote add upstream https://github.com/linnovate/mean
+git fetch upstream   # Fetches any new changes from the original repository
+git merge upstream/master  # Merges any changes fetched into your working files
+# vi .gitignore and remove the public/lib folder
+git status
+git add public/lib
+git commit -m "initial commit"
+# when i commit and want it to go to my github fork its a normal
+git push origin master
+
+
+
+wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+heroku login
+heroku apps
+heroku apps:rename robuntu --app enigmatic-temple-7552
+
+http://robuntu.herokuapp.com/ | git@heroku.com:robuntu.git
+
+git push heroku master
+
+
+MEAN Stack
 
 MEAN is a boilerplate that provides a nice starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. It is designed to give you quick and organized way to start developing of MEAN based web apps with useful modules like mongoose and passport pre-bundled and configured. We mainly try to take care of the connection points between existing popular frameworks and solve common integration problems.  
 
