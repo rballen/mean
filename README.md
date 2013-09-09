@@ -1,32 +1,63 @@
-robuntu-mean-admin
+mean aka robuntu-mean-admin
 ====================================
 
 setup
 --------------------------------
-# fork https://github.com/linnovate/mean on github and now clone to laptop to work on files
+1. fork https://github.com/linnovate/mean  
+2. clone newly forked repo rballen/mean 
+3. configure remotes so i can fetch upstream changes 
+4. remove public/lib from .gitignore
+5. finish github steps below
+6. create account at heroku.com
+7. install toolbelt and finsh finish heroku setup below
+
+__github repos__
+
+```sh
 git clone https://github.com/rballen/mean.git robuntu-mean-admin
-# configure remote so i can fetch upstream changes into my code
 cd robuntu-mean-admin
+npm install
 git remote add upstream https://github.com/linnovate/mean
-git fetch upstream   # Fetches any new changes from the original repository
-git merge upstream/master  # Merges any changes fetched into your working files
-# vi .gitignore and remove the public/lib folder
+git fetch upstream                  # Fetches any new changes from the original repository
+git merge upstream/master           # Merges any changes fetched into your working files
 git status
-git add public/lib
+git add public/lib                  # add all the public/lib files
 git commit -m "initial commit"
-# when i commit and want it to go to my github fork its a normal
-git push origin master
+git push origin master              # pushes to rballen/mean
+```
 
-
-
+__heroku__   
+```sh
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku login
-heroku apps
-heroku apps:rename robuntu --app enigmatic-temple-7552
+heroku apps                                                               # lists my apps
+heroku apps:rename robuntu --app enigmatic-temple-7552                    # rename the given name to my own
+# http://robuntu.herokuapp.com/ | git@heroku.com:robuntu.git              # returns my git repo on heroku
+heroku git:remote -a robuntu                                              # i will push to github and heroku from my laptop or raspberry-pi
+heroku keys:add                                                           # setup ssh access
+git push heroku master                                                    # deploy app to heroku via git
+```
+login in to [heroku dashboard](https://dashboard.heroku.com/apps/robuntu/resources) and set up loggin and a mongodb db
 
-http://robuntu.herokuapp.com/ | git@heroku.com:robuntu.git
+1. click Run Production Check
+2. click PaperTrail under log monitoring and add packages choklad (free) or `heroku addons:add papertrail:choklad`
+3. click 'Get Addons' and add mongohq --> mongodb sandbox (free) plan or `heroku addons:add mongohq:sandbox`
+4. click on monghq from dashboard to configure
+5. click Admin -- > Users 
+6. update textfield that sasys db.addUser - give new  username/passwd (stored  in keypassx under heroku)
+7. click overview and copy the Mongo URI 
+8. paste uri in config/config.js under
+development
+  db: 'mongodb://xxxxxxxxmongohq.com:xxxxxxxx
+9. commmit changes and push to heroku
+```sh
+git status
+git add .
+git commit -m "updated with mongohq uri"
+git push heroku master                # !!! don't push to public github with username/password visable in javascript!!!
+heroku open                           # opens browser to http://robuntu.herokuapp.com/#!/
+```
 
-git push heroku master
 
 
 MEAN Stack
